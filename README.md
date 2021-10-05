@@ -1,2 +1,2 @@
-#Bankist Website
+# Bankist Website
 Website for the Bankist app
