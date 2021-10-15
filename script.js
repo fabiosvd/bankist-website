@@ -6,6 +6,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const header = document.querySelector('.header');
 const nav = document.querySelector('.nav');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
@@ -113,14 +114,43 @@ const handleHover = function (e) {
   }
 };
 
-// Passing "argument" into handler
-nav.addEventListener('mouseover', handleHover.bind(0.5));
-nav.addEventListener('mouseout', handleHover.bind(1));
+// // Passing "argument" into handler
+// nav.addEventListener('mouseover', handleHover.bind(0.5));
+// nav.addEventListener('mouseout', handleHover.bind(1));
 
-// Sticky navigation
-const initialCoords = section1.getBoundingClientRect();
+// // Sticky navigation
+// const initialCoords = section1.getBoundingClientRect();
 
-window.addEventListener('scroll', function () {
-  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
+// window.addEventListener('scroll', function () {
+//   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+// const callback = function (entries, observer) {
+//   entries.forEach(entry => {});
+// };
+
+// const options = {
+//   root: null,
+//   threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(callback, options);
+// observer.observe(section1);
+
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  !entry.isIntersecting
+    ? nav.classList.add('sticky')
+    : nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
 });
+
+headerObserver.observe(header);
